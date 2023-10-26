@@ -1,6 +1,9 @@
 <div>
-  <%= image_tag @book.get_image %>
+  <%= image_tag @user.get_profile_image(100,100) %>
   <p>Title：<%= @book.title %></p>
   <p>Option: <%= @book.body %></p>
-  <p><%= @book.user.name</p>
+  <p><%=link_to @book.user.name, user_path(@book.user) %></p>
+  <% if @book.user == current_user %>
+    <%= link_to "Destroy", book_path(@book), method: :delete %>
+  <% end %>
 </div>
