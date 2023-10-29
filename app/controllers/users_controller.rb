@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @books = @user.books
+    @book = Book.new
   end
 
   def index
@@ -11,13 +12,14 @@ class UsersController < ApplicationController
   end
 
   def edit
+    is_matching_login_user
     @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      flash[:notice] = "You have update successfully"
+      flash[:notice] = "You have update  successfully"
       redirect_to user_path(@user.id)
     else
       flash[:notice] = "error occurred"
@@ -34,7 +36,7 @@ class UsersController < ApplicationController
   def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id
-      redirect_to books_path
+      redirect_to user_path(current_user.id)
     end
   end
 end
